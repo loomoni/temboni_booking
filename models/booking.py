@@ -11,7 +11,7 @@ class Book(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "booking Table"
     _rec_name = "name_seq"
-    # _order = "id desc"
+    _order = "id desc"
 
     # The code to control the onchange according to the section of the venue
     @api.onchange('name')
