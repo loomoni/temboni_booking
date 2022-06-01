@@ -4,6 +4,7 @@ import datetime
 
 class AccountInvoiceGenerator(models.Model):
     _inherit = "account.invoice"
+    _order = "id desc"
 
     ref_number = fields.Many2one(comodel_name="book", string="Ref Number", required=True, )
     amount_untaxed = fields.Float(string="Total Cost", required=False, related="ref_number.amount_total")
