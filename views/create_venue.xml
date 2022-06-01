@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    This is the tree view data -->
+    <record id="create_venue_tree" model="ir.ui.view">
+        <field name="name">create.venue.tree</field>
+        <field name="model">create.venue</field>
+        <field name="arch" type="xml">
+            <tree string="Create Venue">
+                <field name="name"/>
+                <field name="location"/>
+                <field name="supervisor"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="create_venue_form" model="ir.ui.view">
+        <field name="name">create.venue.form</field>
+        <field name="model">create.venue</field>
+        <field name="arch" type="xml">
+            <form string="Create Venue">
+                <sheet>
+                    <div class="oe_title">
+                        <group string="Supervisor Name">
+                            <field name="supervisor"/>
+                        </group>
+                    </div>
+                    <group>
+                        <group string="Venue name">
+                            <field name="name"/>
+                        </group>
+                        <group string="Venue Location">
+                            <field name="location"/>
+                        </group>
+                    </group>
+                    <div class="oe_title">
+                        <group string="Section Name's">
+                        </group>
+                    </div>
+                    <notebook>
+                        <page string="Section Name">
+                            <field name="venue_section_name_tab">
+                                <tree editable="bottom">
+                                    <field name="venue_section_name"/>
+                                    <field name="venue_section_size"/>
+                                    <field name="venue_section_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <div class="oe_title">
+                        <group string="Charge Method Per Section">
+                        </group>
+                    </div>
+                    <notebook>
+
+                        <page string="Venue Sections">
+                            <field name="section_tab_line">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="day"/>
+                                    <field name="rate"/>
+                                    <field name="section_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Food">
+                            <field name="food_tab">
+                                <tree editable="bottom">
+                                    <field name="package_name"/>
+                                    <field name="package_size"/>
+                                    <field name="selling_price"/>
+                                    <field name="include"/>
+                                    <field name="food_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="System">
+                            <field name="system_tab">
+                                <tree editable="bottom">
+                                    <field name="package_name"/>
+                                    <field name="selling_price"/>
+                                    <field name="include"/>
+                                    <field name="system_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Decoration">
+                            <field name="decoration_tab">
+                                <tree editable="bottom">
+                                    <field name="package_name"/>
+                                    <field name="selling_price"/>
+                                    <field name="include"/>
+                                    <field name="decoration_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Others">
+                            <field name="others_tab">
+                                <tree editable="bottom">
+                                    <field name="package_name"/>
+                                    <field name="selling_price"/>
+                                    <field name="include"/>
+                                    <field name="others_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <div class="oe_title">
+                        <group string="Charge Method Per Participant">
+                        </group>
+                    </div>
+                    <notebook>
+
+                        <page string="Charge Per Participants">
+                            <field name="participant_tab">
+                                <tree editable="bottom">
+                                    <field name="day"/>
+                                    <field name="rate"/>
+                                    <field name="participant_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--Graph view for the venue perfomance-->
+    <record id="venue_performance_graph" model="ir.ui.view">
+        <field name="name">venue.performance.graph</field>
+        <field name="model">book</field>
+        <field name="arch" type="xml">
+            <graph string="Performance Graph">
+                <field name="name"/>
+                <field name="id" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!--    Perfomance venue condition Action-->
+    <record id="venue_performance_action" model="ir.actions.act_window">
+        <field name="name">Venue Perfomance</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">book</field>
+        <field name="view_mode">graph</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new venue here!!!
+            </p>
+        </field>
+    </record>
+
+    <!--    This is code to show the action of the program -->
+    <record id="venue_create_action" model="ir.actions.act_window">
+        <field name="name">Create Venue</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">create.venue</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p>
+            <p class="o_view_nocontent_smiling_face">
+                <!-- More details about what a user can do with this object will be OK -->
+                Create a new Venue, No venue Created Yet!!
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem id="Create_venue_root"
+              name="Booking"
+              sequence="1"/>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem
+            id="Venue_id"
+            name="Venue"
+            parent="Create_venue_root"
+            sequence="1"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="venue_location"
+              name="Create Venue"
+              parent="Venue_id"
+              action="venue_create_action"
+              sequence="1"/>
+
+    <!--    Menu for the performance of the venue-->
+    <menuitem id="venue_performance"
+              name="Venue Performance"
+              parent="Venue_id"
+              sequence="2"
+              action='venue_performance_action'
+    />
+</odoo>

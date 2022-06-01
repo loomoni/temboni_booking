@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    add customer kanban view-->
+    <record id="add_customer_kanban_view" model="ir.ui.view">
+        <field name="name">add.customer.kanban.view</field>
+        <field name="model">customer.add</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="o_kanban_image">
+                                            <img t-att-src="kanban_image('customer.add','image',record.id.raw_value)"
+                                                 alt="Image"/>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <ul>
+
+                                            <li>Name:
+                                                <field name="name"/>
+                                            </li>
+                                            <li>Email:
+                                                <field name="email"/>
+                                            </li>
+                                            <li>Phone 1:
+                                                <field name="phone"/>
+                                            </li>
+                                            <li>Phone 2:
+                                                <field name="alt_phone"/>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="res_config_settings_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <!-- Add your fields or attributes here -->
+                <div class="o_setting_left_pane">
+                    <label for="note" string="Default Note">
+                        <!--                        <field name="note"/>-->
+                    </label>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <!--    This is the tree to control the number of the addition of the customers-->
+    <record id="customer_add_tree" model="ir.ui.view">
+        <field name="name">customer.add.tree</field>
+        <field name="model">customer.add</field>
+        <field name="arch" type="xml">
+            <tree string="Customer">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="alt_phone"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    This is the form to control the addition of the customer-->
+    <record id="customer_add_form" model="ir.ui.view">
+        <field name="name">customer.add.form</field>
+        <field name="model">customer.add</field>
+        <field name="arch" type="xml">
+            <form string="Customers">
+
+                <sheet>
+                    <div>
+                        <field name="image" widget="image"/>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="email"/>
+                        </group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="alt_phone"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="setting_venue_id" model="ir.actions.act_window">
+        <field name="name">Booking Setting</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="res_config_settings_form"/>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'om_venue_booking'}</field>
+    </record>
+
+
+    <!--    This is code to show the action of the program -->
+    <record id="customer_action" model="ir.actions.act_window">
+        <field name="name">Users</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">customer.add</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p>
+            <p class="o_view_nocontent_smiling_face">
+                <!-- More details about what a user can do with this object will be OK -->
+                Create a new Customers, No Customer Created Yet!!
+            </p>
+        </field>
+    </record>
+
+    <!--    Action to add products -->
+    <record id="product_action" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p>
+            <p class="o_view_nocontent_smiling_face">
+                <!-- More details about what a user can do with this object will be OK -->
+                Create a new product, No product Created Yet!!
+            </p>
+        </field>
+    </record>
+
+    <!--    Action to add customers -->
+    <record id="customer_action_id" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p>
+            <p class="o_view_nocontent_smiling_face">
+                <!-- More details about what a user can do with this object will be OK -->
+                Create a new Customer!!
+            </p>
+        </field>
+    </record>
+
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem
+            id="configuration_id"
+            name="Configuration"
+            parent="Create_venue_root"
+            sequence="10"
+            groups="om_venue_booking.administrator_access_group_id"
+    />
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="settings_id"
+              name="Settings"
+              parent="configuration_id"
+              action="setting_venue_id"
+              sequence="1"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="user_id"
+              name="User"
+              parent="configuration_id"
+              action="customer_action"
+              sequence="2"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="customer_id"
+              name="Customer"
+              parent="configuration_id"
+              action="customer_action_id"
+              sequence="3"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="product_id"
+              name="Product"
+              parent="configuration_id"
+              action="product_action"
+              sequence="4"/>
+
+</odoo>

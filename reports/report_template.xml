@@ -1,0 +1,347 @@
+<odoo>
+
+    <!-- Payment Registration report -->
+    <template id="report_register_payment">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <br/>
+                        <br/>
+                        <div class="row mt32 mb32">
+                            <h4>
+                                <span>
+                                    <strong>
+                                        <center>
+                                            <div t-esc="doc.payment_reference"/>
+                                        </center>
+                                    </strong>
+                                </span>
+                            </h4>
+                        </div>
+                        <div class="row mt32 mb32">
+                            <div class="text-center">
+                                <strong>Date:</strong>
+                                <span t-esc="doc.due_date"/>
+                            </div>
+                        </div>
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>
+                                    <strong>Customer Name</strong>
+                                </td>
+                                <td>
+                                    <strong>Venue Name</strong>
+                                </td>
+                                <td>
+                                    <strong>Things Paid</strong>
+                                </td>
+                                <td>
+                                    <strong>Payment Amount</strong>
+                                </td>
+                                <td>
+                                    <strong>Date</strong>
+                                </td>
+                            </tr>
+                            <tr t-foreach="docs" t-as="doc">
+                                <td>
+                                    <span t-esc="doc.customer_name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.payment_reference"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.payment_amount"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.due_date"/>
+                                </td>
+                            </tr>
+                            <br></br>
+                            <tr>
+                                <td/>
+                                <td/>
+                                <td/>
+                                <td>
+                                    <strong>Total Cost:</strong>
+                                    <br></br>
+                                    <strong>Amount Paid:</strong>
+                                    <br></br>
+                                    <strong>Amount Remain:</strong>
+                                    <br></br>
+                                </td>
+                                <td>
+                                    <t t-foreach="docs" t-as="doc">
+                                        <t t-esc="doc.total_cost"/>
+                                    </t>
+
+                                    <t t-foreach="docs" t-as="doc">
+                                        <br></br>
+                                        <t t-esc="doc.amount_paid"/>
+                                    </t>
+
+                                    <t t-foreach="docs" t-as="doc">
+                                        <br></br>
+                                        <t t-esc="doc.amount_unpaid"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!--    Booking Report Template -->
+
+<!--    <template id="report_booked_venue">-->
+<!--        <t t-call="web.html_container">-->
+<!--            <t t-call="web.external_layout">-->
+<!--                <t t-foreach="docs" t-as="doc">-->
+<!--                    <div class="page">-->
+<!--                        <br/>-->
+<!--                        <br/>-->
+<!--                        <div class="row mt32 mb32">-->
+<!--                            <h4>-->
+<!--                                <span>-->
+<!--                                    <strong>-->
+<!--                                        <center>-->
+<!--                                            <div t-esc="doc.name_seq"/>-->
+<!--                                        </center>-->
+<!--                                    </strong>-->
+<!--                                </span>-->
+<!--                            </h4>-->
+<!--                        </div>-->
+<!--                        <table class="table table-condensed">-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <strong>Venue Name</strong>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <strong>Customer Name</strong>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <strong>Event Day</strong>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <strong>Event Type</strong>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <strong>Charge Method</strong>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <strong>Event Date</strong>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr t-foreach="docs" t-as="doc">-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.name.name"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.customer_name_add.name"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.event_day"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.event_type"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.charge_method"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.date_from"/>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <br></br>-->
+<!--                            <tr>-->
+<!--                                <td/>-->
+<!--                                <td/>-->
+<!--                                <td/>-->
+<!--                                <td/>-->
+<!--                                <td>-->
+<!--                                    <strong>Total Cost:</strong>-->
+<!--                                    <br></br>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <t t-foreach="docs" t-as="doc">-->
+<!--                                        <t t-esc="doc.amount_total"/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+<!--                        <table class="table table-condensed">-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <strong>Drink</strong>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <strong>Unit Quantity</strong>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <strong>Unit Cost</strong>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <strong>Total</strong>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+
+<!--                            <div class="row mt32 mb32">-->
+<!--                            <h4>-->
+<!--                                <span>-->
+<!--                                    <strong>-->
+<!--                                        <center>-->
+<!--                                            Drinks-->
+<!--                                        </center>-->
+<!--                                    </strong>-->
+<!--                                </span>-->
+<!--                            </h4>-->
+<!--                        </div>-->
+
+<!--                            <tr t-foreach="docs.per_venue_tab" t-as="line">-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.per_venue_tab.section_fields.name"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.per_venue_tab.quantity"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.per_venue_tab.unit_cost"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.per_venue_tab.total_cost"/>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+
+ <!-- <t t-foreach="doc.order_line" t-as="line">-->
+
+<!--                Food report printing -->
+<!--                        <table class="table table-condensed">-->
+<!--                            <thead>-->
+<!--                                <tr>-->
+<!--                                    <td>-->
+<!--                                        <strong>Food</strong>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <strong>Quantity</strong>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <strong>Unit Cost</strong>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <strong>Total</strong>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+
+<!--                            <div class="row mt32 mb32">-->
+<!--                                <h4>-->
+<!--                                    <span>-->
+<!--                                        <strong>-->
+<!--                                            <center>-->
+<!--                                                Food-->
+<!--                                            </center>-->
+<!--                                        </strong>-->
+<!--                                    </span>-->
+<!--                                </h4>-->
+<!--                            </div>-->
+
+<!--&lt;!&ndash;                            <tr t-foreach="docs.food_select_id" t-as="line" t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">&ndash;&gt;-->
+<!--                            <tr t-foreach="docs.food_select_id" t-as="line">-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.food_select_id.food_fields.package_name"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.food_select_id.quantity"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.food_select_id.unit_cost"/>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-esc="doc.food_select_id.total_cost"/>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+
+<!--                    </div>-->
+<!--                </t>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
+
+
+    <!--    Create a venue printing report -->
+    <template id="report_created_venue">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <br/>
+                        <br/>
+                        <div class="row mt32 mb32">
+                            <h4>
+                                <span>
+                                    <strong>
+
+                                    </strong>
+                                </span>
+                            </h4>
+                        </div>
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>
+                                    <strong>Venue Name</strong>
+                                </td>
+                                <td>
+                                    <strong>Supervisor Name</strong>
+                                </td>
+                                <td>
+                                    <strong>Location</strong>
+                                </td>
+                                <td>
+                                    <strong>Charge Method</strong>
+                                </td>
+                            </tr>
+                            <tr t-foreach="docs" t-as="doc">
+                                <td>
+                                    <span t-esc="doc.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.supervisor.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.location"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc.charge_cost"/>
+                                </td>
+
+                            </tr>
+                            <tr>
+
+                                <td attrs="{'invisible':[('charge_cost', '=', 'participant')]}">
+                                    <div class="row mt32 mb32"
+                                         attrs="{'invisible':[('charge_cost', '=', 'participant')]}">
+                                        <h4>
+                                            <span>
+                                                <center>Facilities Available</center>
+                                            </span>
+                                        </h4>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>
+

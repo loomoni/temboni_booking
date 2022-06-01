@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <record id="create_down_payment_form" model="ir.ui.view">
+      <field name="name">create.down.payment.form</field>
+      <field name="model">create.down.payment</field>
+      <field name="arch" type="xml">
+          <form string="Register Payment">
+              <group>
+                  <field name="down_payment"/>
+              </group>
+              <group>
+                   <field name="date"/>
+              </group>
+              <footer>
+                  <button name="action_register_save" type="object" string="Register" class="btn-primary"/>
+                  <button string="Cancel" class="btn-secondary" special="cancel"/>
+              </footer>
+          </form>
+      </field>
+  </record>
+
+    <record id="create_down_payment" model="ir.actions.act_window">
+        <field name="name">Register Payment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">create.down.payment</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="create_down_payment_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

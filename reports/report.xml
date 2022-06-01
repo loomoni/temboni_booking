@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <report
+            id="report_register_payment_id"
+            model="venue.payment"
+            string="Register Payment"
+            report_type="qweb-pdf"
+            name="om_venue_booking.report_register_payment"
+            file="om_venue_booking.report_register_payment"
+        />
+        <report
+            id="report_booking_id"
+            model="book"
+            string="booked Venue"
+            report_type="qweb-pdf"
+            name="om_venue_booking.report_booked_venue"
+            file="om_venue_booking.report_booked_venue"
+        />
+        <report
+            id="report_create_venue_id"
+            model="create.venue"
+            string="created Venue"
+            report_type="qweb-pdf"
+            name="om_venue_booking.report_created_venue"
+            file="om_venue_booking.report_created_venue"
+        />
+
+    </data>
+</odoo>

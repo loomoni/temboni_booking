@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- This is the tree view of venue payment data-->
+    <record id="book_tree" model="ir.ui.view">
+        <field name="name">book.tree</field>
+        <field name="model">book</field>
+        <field name="arch" type="xml">
+            <tree string="Booking">
+                <field name="name"/>
+                <field name="name_seq"/>
+                <field name="event_type"/>
+                <field name="date_from"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    This is the form view of the venue data -->
+    <record id="venue_payment_form" model="ir.ui.view">
+        <field name="name">book.view.form</field>
+        <field name="model">book</field>
+        <field name="arch" type="xml">
+            <form string="Venue">
+                <header>
+                    <button name="confirm_allocation" string="Confirm" class="oe_highlight" states="draft"
+                            type="object"/>
+                    <button name="approve_request" string="Approve" class="oe_highlight" states="confirm,validate"
+                            type="object" groups="om_venue_booking.manager_access_group_id"/>
+                    <button name="refuse_request" string="Refused" states="confirm,validate" type="object" groups="om_venue_booking.manager_access_group_id"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_booked_venue" type="object" class="oe_stat_button" icon="fa-calendar">
+                            <field name="booked_times" string="calendar" widget="statinfo"/>
+                        </button>
+
+                        <button name="toggle_active"
+                                type="object"
+                                confirm="(Un)archiving a project automatically (un)archives its tasks and issues. Do you want to proceed?"
+                                class="oe_stat_button"
+                                icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name_seq" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group string="Venue Name &amp; Section">
+                        <group>
+                            <field name="name"/>
+                            <field name="section_name"/>
+                        </group>
+                        <group>
+                            <field name="customer_name_add"/>
+                        </group>
+                    </group>
+
+                    <group string="Booking Details">
+                        <group>
+                            <field name="event_day"/>
+                            <field name="event_type"/>
+                            <field name="charge_method"/>
+                        </group>
+
+                        <group>
+                            <field name="date_from"/>
+                        </group>
+
+                    </group>
+
+
+                    <group string="Pay Per Participant" attrs="{'invisible':[('charge_method', '=', 'section')]}">
+                        <field name="no_participant"/>
+                        <field name="rate"/>
+                        <field name="total"/>
+                    </group>
+
+
+                    <notebook attrs="{'invisible':[('charge_method', '=', 'participant')]}">
+                        <page string="Drinks">
+                            <field name="per_venue_tab">
+                                <tree editable="bottom">
+                                    <field name="section_fields"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_cost"/>
+                                    <field name="total_cost"/>
+                                    <field name="per_venue_tab_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Food">
+                            <field name="food_select_id">
+                                <tree editable="bottom">
+                                    <field name="food_fields"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_cost"/>
+                                    <field name="total_cost"/>
+                                    <field name="per_food_tab_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="System">
+                            <field name="system_select_id">
+                                <tree editable="bottom">
+                                    <field name="system_fields"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_cost"/>
+                                    <field name="total_cost"/>
+                                    <field name="per_system_tab_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Decoration">
+                            <field name="decoration_select_id">
+                                <tree editable="bottom">
+                                    <field name="decoration_fields"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_cost"/>
+                                    <field name="total_cost"/>
+                                    <field name="per_decoration_tab_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Others">
+                            <field name="others_select_id">
+                                <tree editable="bottom">
+                                    <field name="others_fields"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_cost"/>
+                                    <field name="total_cost"/>
+                                    <field name="per_others_tab_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="check_discount"/>
+                            <field name="discount_amount" attrs="{'invisible':[('check_discount', '!=', True)]}"/>
+                        </group>
+
+                        <group>
+
+                        </group>
+
+                    </group>
+
+                    <group class="oe_subtotal_footer oe_right">
+                        <div class="oe_subtotal_footer_separator oe_inline">
+                            <label for="amount_total"/>
+                        </div>
+                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                    </group>
+
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    Calendar view status -->
+    <record id="booking_calendar" model="ir.ui.view">
+        <field name="name">booking.calendar</field>
+        <field name="model">book</field>
+        <field name="arch" type="xml">
+            <calendar string="Booking Calendar" date_start="date_from" mode="month" quick_add="False" color="name">
+                <field name="name"/>
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Action to be done when venue is clicked once-->
+
+    <record id="book_action" model="ir.actions.act_window">
+        <field name="name">Book Venue</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">book</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new venue here!!!
+            </p>
+        </field>
+    </record>
+
+    <record id="book_action_overview" model="ir.actions.act_window">
+        <field name="name">Book Venue</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">book</field>
+        <field name="view_mode">calendar</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new venue here!!!
+            </p>
+        </field>
+    </record>
+
+    <!-- Venue menue which is the child menue of the book_root menue -->
+    <menuitem id="booking"
+              name="Booking"
+              parent="Create_venue_root"
+              sequence="2"
+              groups="om_venue_booking.operator_access_group_id"
+    />
+
+    <menuitem id="overview_booking"
+              name="Over View"
+              parent="booking"
+              sequence="1"
+              action='book_action_overview'/>
+
+    <menuitem id="book_venue"
+              name="Book Venue"
+              parent="booking"
+              sequence="2"
+              action='book_action'
+    />
+
+
+</odoo>
