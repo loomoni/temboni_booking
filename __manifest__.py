@@ -8,8 +8,8 @@
     'website': "https://www.kalen.tz.co",
     'depends': ['account', 'base', 'sale', 'board', 'base_setup', 'product', 'analytic', 'portal', 'digest'],
     'data': [
-        'security/ir.model.access.csv',
         'security/security.xml',
+        'security/ir.model.access.csv',
         'wizards/create_down_payment.xml',
         'views/create_venue.xml',
         'views/booking.xml',
